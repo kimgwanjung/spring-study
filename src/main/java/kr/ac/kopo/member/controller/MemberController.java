@@ -44,12 +44,22 @@ public class MemberController {
                 
                 // session에 등록 @SessionAttributes("currentUser")
                 model.addAttribute("currentUser", memberVO);
-                return "redirect:/";
+                String dest = (String)session.getAttribute("dest");
+                session.removeAttribute("dest");
+                if(dest == null) {
+                    return "redirect:/";
+                }else {
+                    return "redirect:/" + dest;
+                }
+                
+
             }
             
         }
 
     }
+    
+    
     
     //@GetMapping("/logout")
     public String logout(HttpSession session) {

@@ -17,7 +17,7 @@
 		where no=#{no}
 	</select>
 	
-	<insert id="insert" parameterType="kr.ac.kopo.board.vo.BoardVO">
+	<insert id="insert" parameterType="boardVO">
 		insert into t_board(no,title,writer,content) 
 		values (seq_t_board_no.nextval, #{title}, #{writer}, #{content})
 	</insert>
