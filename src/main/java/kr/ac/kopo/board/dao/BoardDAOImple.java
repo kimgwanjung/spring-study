@@ -35,6 +35,20 @@ public class BoardDAOImple implements BoardDAO {
         // TODO Auto-generated method stub
         sqlSessionTemplate.insert("springboard.board.dao.BoardDAO.insert", boardVO);
     }
+
+    @Override
+    public void increaseCount(int no) {
+        // TODO Auto-generated method stub
+        sqlSessionTemplate.update("springboard.board.dao.BoardDAO.increaseCount", no);
+    }
+
+    @Override
+    public void decreaseCount(int no) {
+        
+        sqlSessionTemplate.update("springboard.board.dao.BoardDAO.decreaseCount", no);
+        // TODO Auto-generated method stub
+        
+    }
     
 
 }

@@ -7,4 +7,18 @@
 		insert into t_reply(no, writer,content, board_no)
 		values(seq_t_reply_no.nextval, #{writer}, #{content}, #{boardNo})
 	</insert>
+	
+	<select id="selectByBoardNo" parameterType="int" resultType="kr.ac.kopo.reply.vo.ReplyVO">
+		select no, board_no as boardNo, writer, content, reg_date as regDate from t_reply
+		where board_no = #{bno}
+	</select>
+	
+	<delete id="deleteByNo" parameterType="int">
+		delete from t_reply where no = #{no}
+	</delete>
+	
+	<select id="selectByReplyNo" parameterType="int" resultType="kr.ac.kopo.reply.vo.ReplyVO">
+		select board_no as boardNo from t_reply
+		where no = #{no}
+	</select>
 </mapper>

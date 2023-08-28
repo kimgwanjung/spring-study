@@ -6,6 +6,86 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script
+  src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script type="text/javascript">
+	function showReplyList(){
+		// 1. ajax reply list select
+		// 2. 화면에 보여줘!
+		
+		$.ajax({
+			url 	: '${pageContext.request.contextPath}/reply/${boardVO.no}',
+			method 	: 'get',
+			success : function(data){
+				console.log(data)
+				console.log(typeof data)
+				$('#replyList').empty();
+				
+				$(data).each(function(){
+					str = '<hr>';
+					str += '<strong>' + this.content + '</strong>';
+					str += '&nbsp;' + this.writer +'&nbsp;';
+					str += '&nbsp;' + this.regDate + '&nbsp;';
+					str += '<button type class = "delBtn" id = ' + this.no + '>삭제 </button>';
+					
+					$('#replyList').append(str)
+				})
+				// 보여줄 것
+			},
+			error 	: function(){
+				alert('showReplyList 실패')
+			}
+		})
+		
+	}
+	$(document).ready(function(){
+		showReplyList();
+		
+		
+		$(document).on('click', '.delBtn', function(){
+			alert('삭제할까말까~?~?~??~~?~~?~?~?~')
+			let replyNo = $(this).attr('id');
+			$.ajax({
+				url		: '${pageContext.request.contextPath}/reply/'+ replyNo,
+				method	: 'delete',
+				success : function(){
+					showReplyList();
+					alert('delete 성공')
+				},
+				error	: function(){
+					
+					alert('delete 실패')
+				}
+			})
+		})
+		$('#replyAddButton').click(function(){
+			
+			let replyContent = document.reply.content.value;
+			let replyWriter = document.reply.writer.value;
+
+			$.ajax({
+				url 	: '${pageContext.request.contextPath}/reply',
+				method 	: 'post',
+				data 	: {
+					boardNo : ${boardVO.no},
+					content	: replyContent,
+					writer	: replyWriter,
+					
+				},
+				success	: function(){
+
+					document.reply.content.value = "";
+					document.reply.writer.value = "";
+					showReplyList();
+				},
+				error 	: function(){
+					
+					alert('메롱~ 실패')
+				}
+			})
+		})
+	})
+</script>
 </head>
 <body>
 <a href = "${pageContext.request.contextPath}/"> 
@@ -31,7 +111,7 @@
 				<th>지은이</th>
 				<th>내용</th>
 				<th>작성일</th>
-				<th>조회수</th>
+				<th>댓글수</th>
 			</tr>
 			<tr>
 				<td>${boardVO.no}</td>
@@ -48,9 +128,16 @@
 		<input type="button" value="삭제" onclick="location.href='${pageContext.request.contextPath}/'">
 	</div>
 	<div>
+	<form name ="reply">
+
 		댓글: <input type="text" size="100" name="content">
 		작성자: <input type="text" size="20" name="writer">
-		<input type="button" value="댓글쓰기">
+		<input type="button" value="댓글쓰기" id = "replyAddButton">
+	</form>
+		
+	</div>
+	<div id="replyList">
+		
 	</div>
 </body>
 </html>
