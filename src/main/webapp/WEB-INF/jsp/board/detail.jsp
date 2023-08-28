@@ -47,5 +47,10 @@
 		<input type="button" value="목록으로" onclick="location.href='${pageContext.request.contextPath}/board'">
 		<input type="button" value="삭제" onclick="location.href='${pageContext.request.contextPath}/'">
 	</div>
+	<div>
+		댓글: <input type="text" size="100" name="content">
+		작성자: <input type="text" size="20" name="writer">
+		<input type="button" value="댓글쓰기">
+	</div>
 </body>
 </html>

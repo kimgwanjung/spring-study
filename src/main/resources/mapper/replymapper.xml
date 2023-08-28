@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springboard.replyDAO">
+	<insert id="insertReply" parameterType="kr.ac.kopo.reply.vo.ReplyVO">
+		insert into t_reply(no, writer,content, board_no)
+		values(seq_t_reply_no.nextval, #{writer}, #{content}, #{boardNo})
+	</insert>
+</mapper>
